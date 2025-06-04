@@ -88,6 +88,9 @@ export default function Game() {
       setDownKeys((prev) =>
         !prev.includes(event.key) ? [...prev, event.key] : prev
       );
+      if (event.key === " ") {
+        event.preventDefault(); // prevent page scrolling
+      }
     };
 
     const handleKeyUp = (event) => {
@@ -146,7 +149,23 @@ export default function Game() {
   }, [downKeys]);
 
   return (
-    <div className="h-screen w-screen fixed overflow-hidden bg-black">
+    <div
+      style={{
+        backgroundImage: "url('/space.png')",
+        backgroundSize: "cover",
+      }}
+      className="h-screen w-full overflow-hidden bg-black"
+    >
+      {/* <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src="/background.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> */}
       {alienPositions.map((alien, index) => (
         <Alien
           key={index}
@@ -205,6 +224,14 @@ export default function Game() {
           }}
         />
       ) : null}
+      <Image
+        src="/keys.png"
+        alt="Logo"
+        width={200}
+        height={100}
+        className="absolute right-2 bottom-2 z-10"
+        style={{ height: "12%", width: "auto" }}
+      />
     </div>
   );
 }
