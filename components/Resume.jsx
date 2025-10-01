@@ -399,15 +399,15 @@ export default function Resume() {
           .timeline({
             scrollTrigger: {
               trigger: section,
-              start: "bottom 95%",
-              end: "bottom 5%",
+              start: "bottom 70%",
+              end: "bottom 30%",
               toggleActions: "play reverse play reverse",
               scrub: 1,
             },
           })
           .to(section, {
             opacity: 0,
-            y: -50,
+            y: 0,
             scale: 0.9,
             duration: 0.3,
             ease: "power2.in",
