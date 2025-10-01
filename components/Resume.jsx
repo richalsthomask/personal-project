@@ -86,18 +86,47 @@ const resumePages = [
               target: "_blank",
             },
           ].map((link) => (
-            <Link
-              key={link.title}
-              href={link.url}
-              target={link.target}
-              className="hover:opacity-80 mt-2"
-            >
-              <span className="text-gray-500 flex align-middle">
-                {link.icon}
-                <div className="ml-2">{link.title}</div>
-              </span>
-            </Link>
+            <div key={link.title} className="flex">
+              <Link
+                href={link.url}
+                target={link.target}
+                className="hover:opacity-80 mt-2"
+              >
+                <span className="text-gray-500 flex align-middle">
+                  {link.icon}
+                  <div className="ml-2">{link.title}</div>
+                </span>
+              </Link>
+            </div>
           ))}
+        </div>
+        <div className="flex sm:justify-end align-middle gap-5 w-full mt-6 sm:-mt-10">
+          <Link
+            href="/Richals - Resume.pdf"
+            target="_blank"
+            className="hover:opacity-80"
+          >
+            <Image
+              src="/pdf.png"
+              alt="PDF"
+              className="h-15 w-15"
+              width={80}
+              height={80}
+            />
+          </Link>
+          <Link
+            href="/Richals - Resume.docx"
+            target="_blank"
+            className="hover:opacity-80"
+          >
+            <Image
+              src="/docx.png"
+              alt="DOCX"
+              className="h-15 w-15"
+              width={80}
+              height={80}
+            />
+          </Link>
         </div>
       </>
     ),
