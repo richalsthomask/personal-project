@@ -44,6 +44,12 @@ const resumePages = [
               icon: "📧",
             },
             {
+              title: "Profile",
+              url: "https://personal-project-sandy-iota.vercel.app/",
+              icon: "🌐",
+              target: "_blank",
+            },
+            {
               title: "LinkedIn",
               url: "https://www.linkedin.com/in/richals-thomas-3991021a5/",
               icon: (
