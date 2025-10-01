@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { generateChessBoard } from "./utility/generateChessBoard";
@@ -72,6 +72,7 @@ export default function Chess() {
     },
     [cells, selectedCell, turn]
   );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="w-full h-screen flex relative">
