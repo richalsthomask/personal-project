@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
+import ArrowIcon from "./ArrowIcon";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -23,7 +24,7 @@ const resumePages = [
           <p className="text-gray-600 mb-6">
             Frontend Developer with 4 years of experience in analysis, design
             and implementation of web applications with a strong focus on
-            ReactJS, NextJS, HTML, CSS, JS, TS and TailwindCSS.
+            ReactJS, NextJS, HTML, CSS, JS and TS.
           </p>
 
           {[
@@ -110,7 +111,7 @@ const resumePages = [
           <Link
             href="/Richals - Resume.pdf"
             target="_blank"
-            className="hover:opacity-80"
+            className="hover:opacity-80 flex flex-col items-end"
           >
             <Image
               src="/pdf.png"
@@ -119,11 +120,12 @@ const resumePages = [
               width={80}
               height={80}
             />
+            <ArrowIcon className="h-4 w-4 text-[#DC5650] transform rotate-90 relative bottom-2" />
           </Link>
           <Link
             href="/Richals - Resume.docx"
             target="_blank"
-            className="hover:opacity-80"
+            className="hover:opacity-80 flex flex-col items-end"
           >
             <Image
               src="/docx.png"
@@ -132,6 +134,7 @@ const resumePages = [
               width={80}
               height={80}
             />
+            <ArrowIcon className="h-4 w-4 text-[#404F8B] transform rotate-90 relative bottom-2" />
           </Link>
         </div>
       </>
@@ -440,9 +443,7 @@ export default function Resume() {
 
         {sampleProjects.map((project, index) => (
           <Link
-            ref={(el) =>
-              (sectionsRef.current[resumePages.length + index - 1] = el)
-            }
+            ref={(el) => (sectionsRef.current[resumePages.length + index] = el)}
             key={index}
             href={project.url}
             target="_blank"

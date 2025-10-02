@@ -83,7 +83,7 @@ export default function Cell({
           height={100}
           src={`/chess pieces/${cell.occupiend.color}-${cell.occupiend.piece}.png`}
           alt={`${cell.occupiend.color} ${cell.occupiend.piece}`}
-          className={`relative z-10 ${
+          className={`relative z-10 w-5/6 max-w-28 ${
             cell.occupiend
               ? "hover:scale-110 transition-transform duration-200"
               : ""

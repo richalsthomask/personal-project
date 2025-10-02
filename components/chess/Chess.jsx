@@ -75,7 +75,7 @@ export default function Chess() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="w-full h-screen flex relative">
+      <div className="w-full h-screen pb-20 flex relative">
         {gameOverScreen && (
           <GameOverScreen
             winner={gameOverScreen}
