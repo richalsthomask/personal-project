@@ -1,12 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import ArrowIcon from "./ArrowIcon";
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+import SampleProjects from "./SampleProjects";
 
 const resumePages = [
   {
@@ -261,7 +258,7 @@ const resumePages = [
           <h4 className="font-semibold">Deployment Servers</h4>
           <p>
             Vercel, Netlify, AWS Amplify, AWS S3, Google Cloud Deploy, GitHub
-            Pages, Heroku, Windows IAS
+            Pages, Heroku, Windows IIS
           </p>
         </div>
 
@@ -285,152 +282,125 @@ const resumePages = [
   },
 ];
 
-const sampleProjects = [
-  {
-    title: "RUNRUN",
-    url: "https://runrun.io/en",
-    description:
-      "A platform to book and manage stadiums and sports facilities in UAE.",
-    imageUrl: "/projects/runrun.png",
-  },
-  {
-    title: "Runrun Vendor Portal",
-    url: "https://vendor.runrun.io/sign-in",
-    description: "Vendor management portal for Runrun platform.",
-    imageUrl: "/projects/runrun_vendor.png",
-  },
-  {
-    title: "Runrun Support Portal",
-    url: "https://support.runrun.io/login",
-    description: "Support portal for Runrun platform users.",
-    imageUrl: "/projects/runrun_customer.png",
-  },
-  {
-    title: "ArikeCare",
-    url: "https://arikecare.org/",
-    description: "Website for a charity organization.",
-    imageUrl: "/projects/arikecare.png",
-  },
-  {
-    title: "ADR",
-    url: "https://adr-alpha.vercel.app/",
-    description:
-      "A platform for filing and resolving legal disputes private and online.",
-    imageUrl: "/projects/adr.png",
-  },
-  {
-    title: "HelpSquad",
-    url: "https://helpsquad.us/",
-    description:
-      "A handyman service platform connecting users with local professionals in USA.",
-    imageUrl: "/projects/helpsquad.png",
-  },
-  {
-    title: "Roel",
-    url: "https://roel.pages.dev/",
-    description: "A company website for a petrolium product company.",
-    imageUrl: "/projects/roel.png",
-  },
-  {
-    title: "Zartek Technologies",
-    url: "https://www.zartek.in/",
-    description: "Corporate website for Zartek Technologies.",
-    imageUrl: "/projects/zartek.png",
-  },
-  {
-    title: "Doorz AI",
-    url: "https://beta.doorz.ai/",
-    description:
-      "An all in one platform for home owner association managers and members.",
-    imageUrl: "/projects/doorz.png",
-  },
-  {
-    title: "LQ Home",
-    url: "https://home.mylq.app/",
-    description: "A learning platform",
-    imageUrl: "/projects/lq.png",
-  },
-  //   {
-  //     title: "Epigenetics India",
-  //     url: "https://richalsthomask.github.io/epigeneticsIndia",
-  //     description: "A website for Epigenetics India conference.",
-  //     imageUrl: "/projects/epigenetics.png",
-  //   },
-  //   {
-  //     title: "Lanebite (mobile)",
-  //     url: "https://www.lanebite.com/",
-  //     description: "An online streetfood listing and rating platform.",
-  //     imageUrl: "/projects/lanebite.png",
-  //   },
+const tabs = [
+  { id: 0, label: "Profile" },
+  { id: 1, label: "Experience" },
+  { id: 2, label: "Skills" },
+  { id: 3, label: "Projects" },
 ];
+
 export default function Resume() {
-  const sectionsRef = useRef([]);
+  const [activeTab, setActiveTab] = useState(0);
+  const contentRefs = useRef([]);
+  const isManualScroll = useRef(false);
 
   useEffect(() => {
-    // Clear any existing ScrollTriggers
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    const observers = contentRefs.current.map((ref, index) => {
+      if (!ref) return null;
 
-    sectionsRef.current.forEach((section, index) => {
-      if (section) {
-        // Set initial state
-        gsap.set(section, {
-          opacity: 0,
-          y: 100,
-          scale: 0.9,
-        });
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !isManualScroll.current) {
+            setActiveTab(index);
+          }
+        },
+        {
+          threshold: 0.5,
+          rootMargin: "-100px 0px -100px 0px",
+        }
+      );
 
-        // Create scroll-triggered animation
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "top 90%",
-              end: "top 10%",
-              toggleActions: "play reverse play reverse",
-              scrub: 1,
-            },
-          })
-          .to(section, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "bottom 70%",
-              end: "bottom 30%",
-              toggleActions: "play reverse play reverse",
-              scrub: 1,
-            },
-          })
-          .to(section, {
-            opacity: 0,
-            y: 0,
-            scale: 0.9,
-            duration: 0.3,
-            ease: "power2.in",
-          });
-      }
+      observer.observe(ref);
+      return observer;
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      observers.forEach((observer) => {
+        if (observer) observer.disconnect();
+      });
     };
   }, []);
 
+  const handleTabClick = (tabId) => {
+    isManualScroll.current = true;
+    setActiveTab(tabId);
+
+    contentRefs.current[tabId]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    setTimeout(() => {
+      isManualScroll.current = false;
+    }, 1000);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-300 flex flex-col items-center pt-20 pb-40 px-8">
-      <div className="space-y-8 w-full max-w-7xl">
-        {resumePages.map((page, i) => (
-          <div
-            key={i}
-            ref={(el) => (sectionsRef.current[i] = el)}
-            className="bg-white shadow-xl rounded-2xl p-8"
+      {/* Tab Navigation - Liquid Glass */}
+      <div className="w-full max-w-7xl mb-8 sticky top-4 z-50">
+        <div className="relative backdrop-blur-md bg-white/30 rounded-3xl shadow-2xl p-2 px-7 flex gap-3 border border-white/50">
+          {/* Animated liquid background blob */}
+          <motion.div
+            className="absolute inset-0 rounded-3xl overflow-hidden"
+            initial={false}
+          >
+            <motion.div
+              className="absolute h-full bg-gradient-to-r from-blue-100/40 via-purple-100/40 to-pink-100/40 blur-xl"
+              animate={{
+                x: activeTab * 100 + "%",
+                width: activeTab === 3 ? "30%" : "25%",
+              }}
+              transition={{
+                type: "spring",
+                damping: 30,
+                stiffness: 200,
+              }}
+            />
+          </motion.div>
+
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={`relative flex-1 px-6 py-4 rounded-2xl font-semibold transition-all duration-300 cursor-pointer ${
+                activeTab === tab.id
+                  ? "text-gray-600 scale-[115%] blur-[0.3px]"
+                  : "text-gray-700 hover:text-gray-900 hover:scale-[1.02]"
+              }`}
+            >
+              {activeTab === tab.id && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute inset-0 backdrop-blur-sm bg-gradient-to-br rounded-2xl shadow-lg"
+                  transition={{
+                    type: "spring",
+                    damping: 25,
+                    stiffness: 300,
+                  }}
+                  style={{
+                    boxShadow:
+                      "0 8px 32px 0 rgba(99, 102, 241, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
+                  }}
+                />
+              )}
+              <span className="relative z-10 drop-shadow-sm">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="w-full max-w-7xl space-y-8">
+        {resumePages.map((page, index) => (
+          <motion.div
+            key={index}
+            ref={(el) => (contentRefs.current[index] = el)}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white shadow-xl rounded-2xl p-8 min-h-[500px]"
           >
             {page.title && (
               <h2 className="text-xl font-bold text-gray-800 mb-4">
@@ -438,30 +408,9 @@ export default function Resume() {
               </h2>
             )}
             {page.content}
-          </div>
+          </motion.div>
         ))}
-
-        {sampleProjects.map((project, index) => (
-          <Link
-            ref={(el) => (sectionsRef.current[resumePages.length + index] = el)}
-            key={index}
-            href={project.url}
-            target="_blank"
-            className="bg-white p-6 block shadow-xl rounded-2xl"
-          >
-            <Image
-              src={project.imageUrl}
-              alt={project.title}
-              height={500}
-              width={800}
-              className="w-full object-cover rounded-lg mb-4"
-            />
-            <h3 className="text-lg font-bold text-gray-800 mb-2">
-              {project.title}
-            </h3>
-            <p className="text-gray-600 text-sm">{project.description}</p>
-          </Link>
-        ))}
+        <SampleProjects contentRefs={contentRefs} />
       </div>
     </div>
   );
