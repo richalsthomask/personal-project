@@ -15,7 +15,7 @@ export default function Alien({
       setExploding(true);
       setTimeout(() => {
         setExploding(false);
-      }, 300); // Reset exploding state after 1 second
+      }, 300);
     }
   }, [visible]);
   return (

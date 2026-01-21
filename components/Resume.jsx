@@ -274,7 +274,7 @@ const resumePages = [
           <h4 className="font-semibold">Others</h4>
           <p>
             Git, npm, ESLint, Postman, REST API, GraphQL, Webpack, Docker, VS
-            Code
+            Code, Jira
           </p>
         </div>
       </div>

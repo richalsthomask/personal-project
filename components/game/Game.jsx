@@ -10,11 +10,12 @@ import Image from "next/image";
 
 const alienHeight = 4; // Height of the alien in percentage
 const alienWidth = 3; // Width of the alien in percentage
+
 export default function Game() {
   const [position, setPosition] = useState(50);
   const [projectiles, setProjectiles] = useState([]);
   const [alienPositions, setAlienPositions] = useState(generateAliens());
-  const [alienDirection, setAlienDirection] = useState({ current: "right" }); // Initial direction of aliens
+  const [alienDirection, setAlienDirection] = useState({ current: "right" });
   //right, down, left,down, right
   const [downKeys, setDownKeys] = useState([]);
   const [gameWinLoseStatus, setGameWinLoseStatus] = useState(null); //won || lost
@@ -37,11 +38,11 @@ export default function Game() {
           prev.map((alien) => ({
             ...alien,
             x: alien.x + 1,
-          }))
+          })),
         );
         if (
           alienPositions.some(
-            (alien) => alien.x >= 98 - alienWidth && alien.visible
+            (alien) => alien.x >= 98 - alienWidth && alien.visible,
           )
         ) {
           setAlienDirection({
@@ -55,7 +56,7 @@ export default function Game() {
           prev.map((alien) => ({
             ...alien,
             y: alien.y + 1,
-          }))
+          })),
         );
         if (
           alienDirection.timeStamp &&
@@ -68,7 +69,7 @@ export default function Game() {
           prev.map((alien) => ({
             ...alien,
             x: alien.x - 1,
-          }))
+          })),
         );
         if (alienPositions.some((alien) => alien.x <= 2)) {
           setAlienDirection({
@@ -78,15 +79,15 @@ export default function Game() {
           });
         }
       }
-    }, 100); // Adjust the speed of alien movement here
+    }, 100); // Adjust speed of alien movement
     return () => clearInterval(interval);
   }, [alienDirection, alienPositions]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (gameWinLoseStatus) return; // Ignore key presses if game is won or lost
+      if (gameWinLoseStatus) return;
       setDownKeys((prev) =>
-        !prev.includes(event.key) ? [...prev, event.key] : prev
+        !prev.includes(event.key) ? [...prev, event.key] : prev,
       );
       if (event.key === " ") {
         event.preventDefault(); // prevent page scrolling
@@ -94,7 +95,7 @@ export default function Game() {
     };
 
     const handleKeyUp = (event) => {
-      if (gameWinLoseStatus) return; // Ignore key releases if game is won or lost
+      if (gameWinLoseStatus) return;
       setDownKeys((prev) => prev.filter((key) => key !== event.key));
       if (event.key === " ") {
         setProjectiles((prev) => [...prev, position]);
@@ -113,7 +114,7 @@ export default function Game() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (gameWinLoseStatus) return; // Stop firing projectiles if game is won or lost
+      if (gameWinLoseStatus) return;
       if (downKeys.includes(" ")) {
         setPosition((position) => {
           setProjectiles((prev) => [...prev, position]);
@@ -187,8 +188,8 @@ export default function Game() {
               prev.map((alien) =>
                 alien.x === x && alien.y === y
                   ? { ...alien, visible: false }
-                  : alien
-              )
+                  : alien,
+              ),
             );
           }}
           {...{ alienPositions, alienHeight, alienWidth }}
