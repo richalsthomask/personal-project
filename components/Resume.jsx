@@ -19,7 +19,7 @@ const resumePages = [
           />
           <h2 className="text-2xl font-semibold mb-4">Richals Thomas</h2>
           <p className="text-gray-600 mb-6">
-            Frontend Developer with 4 years of experience in analysis, design
+            Frontend Developer with 5 years of experience in analysis, design
             and implementation of web applications with a strong focus on
             ReactJS, NextJS, HTML, CSS, JS and TS.
           </p>
@@ -307,7 +307,7 @@ export default function Resume() {
         {
           threshold: 0.5,
           rootMargin: "-100px 0px -100px 0px",
-        }
+        },
       );
 
       observer.observe(ref);
