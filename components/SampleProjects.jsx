@@ -5,6 +5,12 @@ import { useState, useEffect, useRef } from "react";
 
 const sampleProjects = [
   {
+    title: "ArikeCare",
+    url: "https://arikecare.org/",
+    description: "Website for a charity organization.",
+    imageUrl: "/projects/arikecare.png",
+  },
+  {
     title: "RUNRUN",
     url: "https://runrun.io/en",
     description:
@@ -22,12 +28,6 @@ const sampleProjects = [
     url: "https://support.runrun.io/login",
     description: "Support portal for Runrun platform users.",
     imageUrl: "/projects/runrun_customer.png",
-  },
-  {
-    title: "ArikeCare",
-    url: "https://arikecare.org/",
-    description: "Website for a charity organization.",
-    imageUrl: "/projects/arikecare.png",
   },
   {
     title: "ADR",
@@ -161,13 +161,13 @@ function ProjectsCard({ projects }) {
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-2xl p-8 min-h-[700px] overflow-hidden">
+    <div className="bg-white shadow-xl rounded-2xl p-8 min-h-175 overflow-hidden">
       <h2 className="text-xl font-bold text-gray-800 mb-6">Projects</h2>
 
       {/* 3D Carousel Container */}
       <div
         ref={carouselRef}
-        className="relative h-[500px] flex items-center justify-center perspective-1000 overflow-visible"
+        className="relative h-125 flex items-center justify-center perspective-1000 overflow-visible"
       >
         <div
           className="relative w-full h-full"
@@ -183,7 +183,7 @@ function ProjectsCard({ projects }) {
             return (
               <motion.div
                 key={index}
-                className="absolute top-1/2 left-1/2 w-[500px] cursor-pointer"
+                className="absolute top-1/2 left-1/2 w-125 cursor-pointer"
                 initial={false}
                 animate={{
                   x: position * 350 - 250,
@@ -219,7 +219,7 @@ function ProjectsCard({ projects }) {
                 }
               >
                 <div
-                  className={`border-none bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-2xl overflow-hidden border-2 transition-all duration-300 ${
+                  className={`border-none bg-linear-to-br from-gray-50 to-white rounded-xl shadow-2xl overflow-hidden border-2 transition-all duration-300 ${
                     isCurrent ? "shadow-gray-500/50" : ""
                   }`}
                   style={{

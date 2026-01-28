@@ -240,13 +240,13 @@ const resumePages = [
           <h4 className="font-semibold">Web Technologies</h4>
           <p>
             HTML, CSS, TailwindCSS, Bootstrap, Material UI, Antd, Redux, React
-            Redux, Recoil, Zustand, Vite, JQuery, Server Side Rendering
+            Redux, Recoil, Zustand, Vite, JQuery, React-i18n, SSR, SSG, ISR, PPR
           </p>
         </div>
 
         <div>
           <h4 className="font-semibold">Frameworks</h4>
-          <p>ReactJS, NextJS</p>
+          <p>ReactJs, NextJS, Flutter</p>
         </div>
 
         <div>
@@ -265,16 +265,17 @@ const resumePages = [
         <div>
           <h4 className="font-semibold">Web Packages / Services</h4>
           <p>
-            Firebase, Razerpay, Agora, Google OAuth, Lottie, Contentful,
-            WYSIWYG, SlateJS, ChartJS, Recharts, Plotly.js, Leaflet
+            Firebase, Stripe, Razerpay, Agora, Google OAuth, Prisma client, Zod,
+            Yup, Formik, Lottie, Contentful, WYSIWYG, SlateJS, ChartJS,
+            Recharts, Ploty.js, leaflet, Framer Motion, OpenAI API
           </p>
         </div>
 
         <div>
           <h4 className="font-semibold">Others</h4>
           <p>
-            Git, npm, ESLint, Postman, REST API, GraphQL, Webpack, Docker, VS
-            Code, Jira
+            GIT, Github, Bitbucket, npm, Yarn, ESLint, Postman, Rest API,
+            GraphQL, Webpack, Docker, VS Code
           </p>
         </div>
       </div>
@@ -336,7 +337,7 @@ export default function Resume() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-300 flex flex-col items-center pt-20 pb-40 px-8">
+    <div className="min-h-screen bg-linear-to-br from-white to-gray-300 flex flex-col items-center pt-20 pb-40 px-8">
       {/* Tab Navigation - Liquid Glass */}
       <div className="w-full max-w-7xl mb-8 sticky top-4 z-50">
         <div className="relative backdrop-blur-md bg-white/30 rounded-3xl shadow-2xl p-2 px-7 flex gap-3 border border-white/50">
@@ -346,7 +347,7 @@ export default function Resume() {
             initial={false}
           >
             <motion.div
-              className="absolute h-full bg-gradient-to-r from-blue-100/40 via-purple-100/40 to-pink-100/40 blur-xl"
+              className="absolute h-full bg-linear-to-r from-blue-100/40 via-purple-100/40 to-pink-100/40 blur-xl"
               animate={{
                 x: activeTab * 100 + "%",
                 width: activeTab === 3 ? "30%" : "25%",
@@ -372,7 +373,7 @@ export default function Resume() {
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 backdrop-blur-sm bg-gradient-to-br rounded-2xl shadow-lg"
+                  className="absolute inset-0 backdrop-blur-sm bg-linear-to-br rounded-2xl shadow-lg"
                   transition={{
                     type: "spring",
                     damping: 25,
@@ -400,7 +401,7 @@ export default function Resume() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.5 }}
-            className="bg-white shadow-xl rounded-2xl p-8 min-h-[500px]"
+            className="bg-white shadow-xl rounded-2xl p-8 min-h-125"
           >
             {page.title && (
               <h2 className="text-xl font-bold text-gray-800 mb-4">
